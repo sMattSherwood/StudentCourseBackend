@@ -18,7 +18,7 @@ public class Student {
     @Column(name = "STUDENT_NAME")
     String studentName;
 
-    Student(){} // default constructor 
+    public Student(){} // default constructor 
 
 
     public Integer getId() {

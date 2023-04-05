@@ -24,7 +24,7 @@ public class Course {
     @ManyToOne
     Student student;
 
-    Course(){
+    public Course(){
         courseName = "?";
         courseDecription = "??";
     }
