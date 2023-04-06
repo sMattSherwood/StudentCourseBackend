@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import msherwood.assignment2.model.Course;
@@ -47,7 +45,7 @@ public class MainController {
     }
 
 // find course with matching id
-    @GetMapping("/Courses/{orderId}")
+    @GetMapping("/Courses/{Id}")
     public ResponseEntity<Course> getCourseById(@PathVariable Integer Id) {
         Course course = resourceService.findCourseById(Id);
         ResponseEntity<Course> responseEntity;
@@ -55,7 +53,7 @@ public class MainController {
         return responseEntity;
     }
 // post mapping for courses
-    @PostMapping("/Courses/{orderId}")
+    @PostMapping("/Courses/{Id}")
     public ResponseEntity<Integer> postCourse(@RequestBody Course newCourse, @PathVariable Integer Id ) {
         Student student = resourceService.findStudentById(Id);
 
@@ -68,7 +66,7 @@ public class MainController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 // delete mapping for courses 
-    @DeleteMapping("/Courses{orderId}")
+    @DeleteMapping("/Courses{Id}")
     public ResponseEntity<Integer> deleteCourse(@PathVariable Integer Id) {
         if(resourceService.deleteCourses(Id)) {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -92,15 +90,22 @@ public class MainController {
         return responseEntity;
     }
 // find student based off of the id 
-    @GetMapping("/Students/{orderId}")
+    @GetMapping("/Students/{Id}")
     public ResponseEntity<Student> getStudentById(@PathVariable Integer Id) {
         Student student = resourceService.findStudentById(Id);
         ResponseEntity<Student> responseEntity;
         responseEntity = new ResponseEntity<>(student, HttpStatus.OK);
         return responseEntity;
     }
+// post mapping for student 
+    @PostMapping("/Students")
+    public ResponseEntity<Integer> postStudent(@RequestBody Student student) {
+        resourceService.saveStudent(student);
+        return new ResponseEntity<>(student.getId(), HttpStatus.CREATED);
+
+    }
 // put mapping for student
-    @PutMapping("/Students/{orderId}")
+    @PutMapping("/Students/{Id}")
     public ResponseEntity<Integer> putStudent(@RequestBody Student newStudent, @PathVariable Integer Id) {
         if(resourceService.updateStudent(newStudent, Id) == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -110,7 +115,7 @@ public class MainController {
         }
     }
 // delete mapping for student
-    @DeleteMapping("Students/{orderId}")
+    @DeleteMapping("Students/{Id}")
     public ResponseEntity<Integer> deleteStudent(@PathVariable Integer Id) {
         if(resourceService.deleteStudent(Id)) {
             return new ResponseEntity<>(HttpStatus.OK);
@@ -119,7 +124,7 @@ public class MainController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 // get courses by using one student 
-    @GetMapping("/Students/{orderId}/Courses")
+    @GetMapping("/Students/{Id}/Courses")
     public ResponseEntity<List<Course>> getCoursesByStudent(@PathVariable Integer Id) {
         Student existingStudent = resourceService.findStudentById(Id);
         List<Course> studentCourses = new ArrayList<>();
