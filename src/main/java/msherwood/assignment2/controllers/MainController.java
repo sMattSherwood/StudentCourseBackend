@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,7 +54,7 @@ public class MainController {
         responseEntity = new ResponseEntity<>(course, HttpStatus.OK);
         return responseEntity;
     }
-
+// post mapping for courses
     @PostMapping("/Courses/{orderId}")
     public ResponseEntity<Integer> postCourse(@RequestBody Course newCourse, @PathVariable Integer Id ) {
         Student student = resourceService.findStudentById(Id);
@@ -66,7 +67,15 @@ public class MainController {
         else
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
+// delete mapping for courses 
+    @DeleteMapping("/Courses{orderId}")
+    public ResponseEntity<Integer> deleteCourse(@PathVariable Integer Id) {
+        if(resourceService.deleteCourses(Id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
 // get mapping for all students 
     @GetMapping("/Students")
@@ -90,7 +99,7 @@ public class MainController {
         responseEntity = new ResponseEntity<>(student, HttpStatus.OK);
         return responseEntity;
     }
-// Post mapping for student
+// put mapping for student
     @PutMapping("/Students/{orderId}")
     public ResponseEntity<Integer> putStudent(@RequestBody Student newStudent, @PathVariable Integer Id) {
         if(resourceService.updateStudent(newStudent, Id) == null) {
@@ -99,6 +108,15 @@ public class MainController {
         else {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
+    }
+// delete mapping for student
+    @DeleteMapping("Students/{orderId}")
+    public ResponseEntity<Integer> deleteStudent(@PathVariable Integer Id) {
+        if(resourceService.deleteStudent(Id)) {
+            return new ResponseEntity<>(HttpStatus.OK);
+        }
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 // get courses by using one student 
     @GetMapping("/Students/{orderId}/Courses")
