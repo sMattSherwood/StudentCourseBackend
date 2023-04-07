@@ -19,9 +19,10 @@ import msherwood.assignment2.model.Course;
 import msherwood.assignment2.model.Student;
 import msherwood.assignment2.services.ResourceService;
 
-@CrossOrigin
+
 @RestController
 @RequestMapping("/api")
+@CrossOrigin(origins = "http://localhost:9090")
 public class MainController {
     ResourceService resourceService; // a local instance of our service file
 
