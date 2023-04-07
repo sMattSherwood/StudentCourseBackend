@@ -9,10 +9,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "COURSE")
+@Table(name = "COURSE") // table name 
 public class Course {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // will automaticly create the id for the data row
     Integer id;
     
     @Column(name = "COURSE_NAME")
@@ -20,7 +20,7 @@ public class Course {
 
     @Column(name = "COURSE_DECRIPTION")
     String courseDecription;
-
+// one student can have many courses
     @ManyToOne
     Student student;
 
@@ -29,7 +29,7 @@ public class Course {
         courseDecription = "??";
     }
 
-
+// getters and setters 
     public Integer getId() {
         return this.id;
     }

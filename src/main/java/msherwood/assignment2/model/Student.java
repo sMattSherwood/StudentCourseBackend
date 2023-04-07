@@ -8,19 +8,19 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "STUDENT")
+@Table(name = "STUDENT") // table name
 public class Student {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // this will allow the id to be automaticaly generated 
     Integer id;
 
-    @Column(name = "STUDENT_NAME")
+    @Column(name = "STUDENT_NAME") 
     String studentName;
 
     public Student(){} // default constructor 
 
-
+// getters and setters 
     public Integer getId() {
         return this.id;
     }
